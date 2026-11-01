@@ -10,7 +10,7 @@ export async function renderForm(el, id) {
   const cats = await getCategories();
   const found = id ? await findTransaction(id) : null;
   let state = { type: 'expense', amount: '', categoryId: null, note: '', date: todayISO() };
-  if (found) state = { type: found.tx.type, amount: String(found.tx.amount / 100), categoryId: found.tx.categoryId, note: found.tx.note || '', date: found.tx.date };
+  if (found) state = { type: found.tx.type, amount: Number.isInteger(found.tx.amount / 100) ? String(found.tx.amount / 100) : (found.tx.amount / 100).toFixed(2), categoryId: found.tx.categoryId, note: found.tx.note || '', date: found.tx.date };
   if (session.draft && session.draft.editId === (id || null)) {
     state = session.draft;
     session.draft = null;

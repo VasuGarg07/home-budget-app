@@ -52,7 +52,7 @@ export async function renderCategoryForm(el, id, params) {
   if (q('#del')) {
     q('#del').onclick = async () => {
       const used = Object.values(await getAllMonths()).flat().filter((t) => t.categoryId === state.id).length;
-      const ok = await confirmDelete(`Delete ${state.name}?`, `Its ${used} transactions will be moved to Other.`);
+      const ok = await confirmDelete(`Delete ${state.name}?`, `Its ${used} ${used === 1 ? 'transaction' : 'transactions'} will be moved to Other.`);
       if (!ok) return;
       await deleteCategory(state.id);
       toast('Deleted');
