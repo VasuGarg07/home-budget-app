@@ -93,7 +93,7 @@ export async function renderForm(el, id) {
     const amount = toPaise(state.amount);
     if (!amount) return toast('Enter an amount');
     if (!state.categoryId) return toast('Choose a category');
-    await saveTransaction({ id: found ? found.tx.id : newId(), type: state.type, amount, categoryId: state.categoryId, note: state.note.trim(), date: state.date }, found?.ym);
+    await saveTransaction({ id: found ? found.tx.id : newId(), type: state.type, amount, categoryId: state.categoryId, note: state.note.trim(), date: state.date, createdAt: found ? found.tx.createdAt : Date.now() }, found?.ym);
     toast('Saved');
     location.hash = '#home';
   };

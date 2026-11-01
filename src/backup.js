@@ -3,6 +3,7 @@ import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
 import { exportAll, importAll, getCategories } from './storage.js';
 import { todayISO } from './format.js';
+import { byNewest } from './rows.js';
 import { dialog, toast } from './ui.js';
 
 async function shareFile(name, text, mime) {
@@ -30,7 +31,7 @@ export async function exportCsv() {
   const names = Object.fromEntries(data.categories.map((c) => [c.id, c.name]));
   const rows = [['Date', 'Type', 'Category', 'Note', 'Amount (INR)']];
   for (const txs of Object.values(data.months)) {
-    for (const t of txs) rows.push([t.date, t.type, names[t.categoryId] || '', t.note || '', (t.amount / 100).toFixed(2)]);
+    for (const t of byNewest(txs)) rows.push([t.date, t.type, names[t.categoryId] || '', t.note || '', (t.amount / 100).toFixed(2)]);
   }
   await shareFile(`home-budget-${todayISO()}.csv`, rows.map((r) => r.map(csvCell).join(',')).join('\n'), 'text/csv');
 }

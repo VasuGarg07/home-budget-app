@@ -19,5 +19,5 @@ export function sumBy(txs, type) {
 }
 
 export function byNewest(txs) {
-  return [...txs].sort((a, b) => b.date.localeCompare(a.date));
+  return [...txs].sort((a, b) => b.date.localeCompare(a.date) || (b.createdAt || 0) - (a.createdAt || 0) || b.id.localeCompare(a.id));
 }
