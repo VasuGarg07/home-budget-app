@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edit category</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+body{margin:0;font-family:'DM Sans',system-ui,sans-serif}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit}
+#confirm{display:none}
+#confirm:target{display:flex}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;box-sizing:border-box;background:#F6F5F1;color:#16211C;overflow:hidden;padding:56px 20px 24px;display:flex;flex-direction:column;gap:20px;font-family:'DM Sans',system-ui,sans-serif">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<a href="Categories.dc.html" aria-label="Close" style="width:44px;height:44px;border-radius:22px;background:#fff;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></a>
+<div style="font-size:17px;font-weight:700">Edit category</div>
+<a href="#confirm" aria-label="Delete category" style="width:44px;height:44px;border-radius:22px;background:#F9E4E1;color:#B3261E;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></a>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<label for="n" style="font-size:16px;color:#44524A">Name</label>
+<input id="n" value="Food" style="height:52px;border:0;border-radius:16px;background:#fff;padding:0 16px;font:inherit;font-size:16px;color:#16211C">
+</div>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="font-size:16px;color:#44524A">Type</div>
+<div style="display:flex;background:#fff;border-radius:22px;padding:4px">
+<button style="flex:1;height:44px;border:0;border-radius:18px;background:#16211C;color:#fff;font-size:15px;font-weight:500">Expense</button>
+<button style="flex:1;height:44px;border:0;border-radius:18px;background:transparent;color:#16211C;font-size:15px">Income</button>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="font-size:16px;color:#44524A">Colour</div>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;background:#fff;border-radius:18px;padding:16px;justify-items:center">
+<button aria-label="Amber, selected" style="width:48px;height:48px;border-radius:24px;border:3px solid #16211C;background:#C77B1C;box-shadow:inset 0 0 0 3px #fff"></button>
+<button aria-label="Blue" style="width:48px;height:48px;border-radius:24px;border:0;background:#2F5D9E"></button>
+<button aria-label="Purple" style="width:48px;height:48px;border-radius:24px;border:0;background:#7A4FA3"></button>
+<button aria-label="Teal" style="width:48px;height:48px;border-radius:24px;border:0;background:#0F7C8A"></button>
+<button aria-label="Brown" style="width:48px;height:48px;border-radius:24px;border:0;background:#8A5A44"></button>
+<button aria-label="Slate" style="width:48px;height:48px;border-radius:24px;border:0;background:#44524A"></button>
+<button aria-label="Pink" style="width:48px;height:48px;border-radius:24px;border:0;background:#B02A6B"></button>
+<button aria-label="Indigo" style="width:48px;height:48px;border-radius:24px;border:0;background:#3F4BA8"></button>
+</div>
+</div>
+
+<div style="flex:1"></div>
+<a href="Categories.dc.html" style="height:56px;border-radius:28px;background:#16211C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">Save category</a>
+
+<div id="confirm" style="position:absolute;left:0;top:0;right:0;bottom:0;background:rgba(22,33,28,.55);align-items:center;justify-content:center;padding:24px;box-sizing:border-box">
+<div role="alertdialog" aria-labelledby="ct" style="background:#fff;border-radius:24px;padding:24px;width:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:16px">
+<div id="ct" style="font-size:22px;font-weight:700">Delete Food?</div>
+<div style="font-size:17px;line-height:1.4">Its 18 transactions will be moved to Other.</div>
+<a href="#none" style="height:56px;border-radius:28px;background:#16211C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700">Cancel</a>
+<a href="Categories.dc.html" style="height:56px;border-radius:28px;background:#B3261E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700">Yes, delete</a>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
