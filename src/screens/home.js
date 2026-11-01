@@ -1,23 +1,13 @@
 import { getCategories, getMonth } from '../storage.js';
-import { currentMonth, monthTitle, money, signedMoney, dayLabel } from '../format.js';
-import { icons } from '../icons.js';
-
-function row(tx, categoryName) {
-  const kind = tx.type === 'income' ? 'income' : 'expense';
-  return `<a class="row ripple" href="#edit/${tx.id}">
-    <div class="badge ${kind}">${kind === 'income' ? icons.up : icons.down}</div>
-    <div class="grow"><div class="row-title">${tx.note || categoryName}</div><div class="muted">${categoryName} · ${dayLabel(tx.date)}</div></div>
-    <div class="amount ${kind}">${signedMoney(tx.amount, tx.type)}</div>
-  </a>`;
-}
+import { currentMonth, monthTitle, money } from '../format.js';
+import { txRow, sumBy, byNewest } from '../rows.js';
 
 export async function renderHome(el) {
   const ym = currentMonth();
   const [cats, txs] = await Promise.all([getCategories(), getMonth(ym)]);
   const names = Object.fromEntries(cats.map((c) => [c.id, c.name]));
-  const sorted = [...txs].sort((a, b) => b.date.localeCompare(a.date));
-  const income = txs.filter((t) => t.type === 'income').reduce((s, t) => s + t.amount, 0);
-  const expense = txs.filter((t) => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
+  const income = sumBy(txs, 'income');
+  const expense = sumBy(txs, 'expense');
   const net = income - expense;
 
   el.innerHTML = `
@@ -34,6 +24,6 @@ export async function renderHome(el) {
       <a class="link" href="#reports">All months</a>
     </div>
     <div class="list">
-      ${sorted.length ? sorted.map((t) => row(t, names[t.categoryId] || 'Other')).join('') : '<p class="empty">No transactions yet. Tap the + button to add one.</p>'}
+      ${txs.length ? byNewest(txs).map((t) => txRow(t, names[t.categoryId] || 'Other')).join('') : '<p class="empty">No transactions yet. Tap the + button to add one.</p>'}
     </div>`;
 }
