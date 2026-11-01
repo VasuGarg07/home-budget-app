@@ -1,5 +1,5 @@
 import { getCategories, findTransaction, saveTransaction, deleteTransaction } from '../storage.js';
-import { money, toPaise, todayISO, newId, esc } from '../format.js';
+import { money, toPaise, todayISO, newId, esc, groupInr } from '../format.js';
 import { session } from '../session.js';
 import { confirmDelete, toast } from '../ui.js';
 import { icons } from '../icons.js';
@@ -34,7 +34,7 @@ export async function renderForm(el, id) {
     <div class="amount-box"><div class="muted">Amount</div><div id="amt" class="big-amount"></div></div>
     <div id="chips" class="chips"></div>
     <div class="fields card-flat">
-      <label class="field"><span class="muted">Note</span><input id="note" maxlength="60" value="${esc(state.note)}"></label>
+      <label class="field"><span class="muted">Note</span><input id="note" maxlength="60" autocomplete="off" enterkeyhint="done" value="${esc(state.note)}"></label>
       <label class="field"><span class="muted">Date</span><input id="date" type="date" max="${todayISO()}" value="${state.date}"></label>
     </div>
     <div class="keypad">${keys.map((k) => `<button class="key ripple" data-k="${k}" ${k === '⌫' ? 'aria-label="Delete digit"' : ''}>${k}</button>`).join('')}</div>
@@ -49,7 +49,8 @@ export async function renderForm(el, id) {
     q('#t-income').className = 'ripple' + (state.type === 'income' ? ' on income-bg' : '');
     const amt = q('#amt');
     amt.className = 'big-amount ' + state.type;
-    amt.textContent = (state.type === 'income' ? '+₹' : '-₹') + (state.amount || '0');
+    amt.textContent = (state.type === 'income' ? '+₹' : '-₹') + groupInr(state.amount || '0');
+    amt.style.fontSize = amt.textContent.length > 12 ? '34px' : '';
     q('#chips').innerHTML =
       list.map((c) => `<button class="chip ripple${c.id === state.categoryId ? ' on' : ''}" data-c="${c.id}">${esc(c.name)}</button>`).join('') +
       '<button class="chip dashed ripple" id="new-cat">+ New</button>';
@@ -73,7 +74,7 @@ export async function renderForm(el, id) {
     if (!k) return;
     if (k === '⌫') state.amount = state.amount.slice(0, -1);
     else if (k === '.') { if (!state.amount.includes('.')) state.amount = (state.amount || '0') + '.'; }
-    else if (state.amount.length < 9 && !/\.\d\d$/.test(state.amount)) state.amount = state.amount === '0' ? k : state.amount + k;
+    else if (state.amount.length < 11 && !/\.\d\d$/.test(state.amount)) state.amount = state.amount === '0' ? k : state.amount + k;
     paint();
   };
   q('#note').oninput = (e) => { state.note = e.target.value; };

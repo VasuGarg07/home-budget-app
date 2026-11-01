@@ -26,13 +26,20 @@ export async function renderAnalysis(el) {
     .filter((g) => g.sum > 0)
     .sort((a, b) => b.sum - a.sum);
 
-  let offset = 0;
+  const point = (fraction) => {
+    const angle = fraction * 2 * Math.PI - Math.PI / 2;
+    return [21 + 15.9155 * Math.cos(angle), 21 + 15.9155 * Math.sin(angle)];
+  };
+  let from = 0;
   const arcs = groups
     .map((g) => {
-      const pct = (g.sum / total) * 100;
-      const arc = `<circle cx="21" cy="21" r="15.9155" fill="none" stroke="${g.cat.color}" stroke-width="6" stroke-dasharray="${pct} ${100 - pct}" stroke-dashoffset="${-offset}" transform="rotate(-90 21 21)"/>`;
-      offset += pct;
-      return arc;
+      const size = g.sum / total;
+      const [x0, y0] = point(from);
+      const [x1, y1] = point(from + size);
+      const large = size > 0.5 ? 1 : 0;
+      from += size;
+      const shape = groups.length > 1 ? `<path d="M${x0} ${y0}A15.9155 15.9155 0 ${large} 1 ${x1} ${y1}" fill="none" stroke="${g.cat.color}" stroke-width="6"/>` : `<circle cx="21" cy="21" r="15.9155" fill="none" stroke="${g.cat.color}" stroke-width="6"/>`;
+      return shape;
     })
     .join('');
 
@@ -47,7 +54,7 @@ export async function renderAnalysis(el) {
           <div class="stack">${groups
             .map(
               (g) => `<details class="acc"${g === groups[0] ? ' open' : ''}>
-              <summary><i class="dot" style="background:${g.cat.color}"></i><span class="grow row-title">${esc(g.cat.name)}</span><b>${money(g.sum, { short: true })}</b><span class="muted pct">${Math.round((g.sum / total) * 100)}%</span><span class="chev">${icons.chevron}</span></summary>
+              <summary><i class="dot" style="background:${g.cat.color}"></i><span class="grow row-title">${esc(g.cat.name)}</span><b>${money(g.sum, { short: true })}</b><span class="chev">${icons.chevron}</span></summary>
               <div class="acc-body">${byNewest(g.items).map((t) => miniRow(t, g.cat.name)).join('')}</div></details>`
             )
             .join('')}</div>`

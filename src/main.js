@@ -39,6 +39,9 @@ function watchKeyboard() {
   if (!vv) return;
   const fullHeight = window.innerHeight;
   vv.addEventListener('resize', () => document.body.classList.toggle('kb', vv.height < fullHeight * 0.75));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.matches('input')) e.target.blur();
+  });
   document.addEventListener('focusin', (e) => {
     if (e.target.matches('input')) setTimeout(() => e.target.scrollIntoView({ block: 'center', behavior: 'smooth' }), 300);
   });

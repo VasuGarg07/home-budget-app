@@ -8,7 +8,7 @@ Published copy: https://claude.ai/artifact/U3CtPzpyjG9fRcpW2ztE3X
 Offline-only income and expense tracker for adults and senior citizens who are not tech friendly. No account, no internet, no database server. Data is stored on the phone. No budgets: only income and expense transactions.
 
 ## Rules
-- Currency is rupee only, fixed. Show as `₹`. No currency setting.
+- Currency is rupee only, fixed. Show as `₹`. No currency setting. Use Indian digit grouping (thousands, lakhs, crores), for example ₹1,25,000.
 - Income is green with `+` and an up arrow. Expense is red with `-` and a down arrow. Never rely on colour alone.
 - Any delete (transaction or category) must show a confirm dialog with Cancel and "Yes, delete". Cancel is the dark primary button.
 - Only the current month's transactions can be edited. Past months and all report lists are read-only.

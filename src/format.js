@@ -10,6 +10,13 @@ export function signedMoney(paise, type, opts) {
   return (type === 'income' ? '+' : '-') + money(paise, opts);
 }
 
+export function groupInr(text) {
+  const [whole, decimals] = text.split('.');
+  const head = whole.slice(0, -3);
+  const grouped = head ? head.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + whole.slice(-3) : whole;
+  return decimals === undefined ? grouped : grouped + '.' + decimals;
+}
+
 export function toPaise(text) {
   return Math.round(parseFloat(text || '0') * 100) || 0;
 }

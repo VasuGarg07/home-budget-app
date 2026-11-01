@@ -11,7 +11,7 @@ export function txRow(tx, categoryName) {
 }
 
 export function miniRow(tx, categoryName) {
-  return `<div class="mini"><span>${shortDate(tx.date)} · ${esc(tx.note || categoryName)}</span><b class="${tx.type}">${signedMoney(tx.amount, tx.type)}</b></div>`;
+  return `<div class="mini"><span><span class="mini-date">${shortDate(tx.date)}</span> · ${esc(tx.note || categoryName)}</span><b class="${tx.type}">${signedMoney(tx.amount, tx.type)}</b></div>`;
 }
 
 export function sumBy(txs, type) {

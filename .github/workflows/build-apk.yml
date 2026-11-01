@@ -28,11 +28,9 @@ jobs:
       - run: ./gradlew assembleDebug -PbuildNumber=${{ github.run_number }}
         working-directory: android
       - run: cp android/app/build/outputs/apk/debug/app-debug.apk home-budget-build-${{ github.run_number }}.apk
-      - uses: softprops/action-gh-release@v2
-        with:
-          tag_name: build-${{ github.run_number }}
-          name: Build ${{ github.run_number }}
-          body: ${{ github.event.head_commit.message }}
-          target_commitish: ${{ github.sha }}
-          make_latest: true
-          files: home-budget-build-${{ github.run_number }}.apk
+      - run: |
+          gh release delete latest --cleanup-tag --yes || true
+          gh release create latest home-budget-build-${{ github.run_number }}.apk --target "${{ github.sha }}" --latest --title "Build ${{ github.run_number }}" --notes "$COMMIT_MESSAGE"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}

@@ -98,9 +98,9 @@ body.kb .nav { display: none; }
 .acc summary::-webkit-details-marker { display: none; }
 .chev { display: flex; transition: transform .2s; color: var(--muted); }
 .acc[open] .chev { transform: rotate(180deg); }
-.pct { width: 40px; text-align: right; }
-.acc-body { padding-bottom: 8px; }
-.mini { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0 10px 28px; border-top: 1px solid var(--line); font-size: 16px; }
+.acc-body { padding-bottom: 4px; }
+.mini { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.mini-date { color: var(--muted); }
 
 .top { display: flex; align-items: center; justify-content: space-between; flex: none; }
 .top h1 { font-size: 18px; }
@@ -115,11 +115,15 @@ body.kb .nav { display: none; }
 .chip.on { background: var(--ink); color: #fff; font-weight: 500; }
 .chip.dashed { background: transparent; border: 1px dashed var(--muted); color: var(--muted); }
 
-.fields { padding: 0 16px; flex: none; }
-.field { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 52px; }
-.field + .field { border-top: 1px solid var(--line); }
-.field input { border: 0; background: transparent; text-align: right; flex: 1; min-width: 0; font-size: 16px; }
-.input { height: 52px; border: 0; border-radius: 16px; background: #fff; padding: 0 16px; font-size: 18px; }
+.fields { padding: 4px 16px; flex: none; }
+.field { display: flex; flex-direction: column; gap: 2px; padding: 10px 0 0; border-bottom: 1px solid var(--line); transition: box-shadow .15s; }
+.field:last-child { border-bottom: 0; }
+.field:focus-within { box-shadow: inset 0 -2px 0 var(--income); }
+.field:focus-within .muted { color: var(--income); }
+.field input { border: 0; outline: 0; background: transparent; text-align: left; width: 100%; height: 40px; padding: 0; font-size: 18px; caret-color: var(--income); }
+.input { height: 52px; border: 0; outline: 0; border-radius: 16px; background: #fff; padding: 0 16px; font-size: 18px; caret-color: var(--income); box-shadow: inset 0 0 0 1px var(--line); }
+.input:focus { box-shadow: inset 0 0 0 2px var(--income); }
+input::selection { background: var(--income-tint); }
 
 .keypad { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; flex: none; }
 .key { height: 52px; border-radius: 14px; background: #fff; font-size: 22px; }
@@ -138,3 +142,4 @@ body.kb .nav { display: none; }
 .dialog p { margin: 0; font-size: 17px; line-height: 1.4; }
 
 .toast { position: fixed; left: 24px; right: 24px; bottom: calc(110px + env(safe-area-inset-bottom)); background: var(--ink); color: #fff; padding: 14px 18px; border-radius: 16px; text-align: center; font-size: 16px; z-index: 20; }
+.version { text-align: center; margin: 8px 0 0; }

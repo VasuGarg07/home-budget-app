@@ -22,8 +22,7 @@ export async function renderReports(el) {
     const net = income - expense;
     return `<details class="acc"${i === 0 ? ' open' : ''}>
       <summary>
-        <div class="grow"><div class="row-title">${monthTitle(ym)}</div>
-          <div class="muted"><span class="income">+${money(income, { short: true })}</span> · <span class="expense">-${money(expense, { short: true })}</span></div></div>
+        <div class="grow row-title">${monthTitle(ym)}</div>
         <b class="${net < 0 ? 'expense' : 'income'}">${net < 0 ? '-' : '+'}${money(net, { short: true })}</b>
         <span class="chev">${icons.chevron}</span>
       </summary>
